@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html	
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/defaultLayout}">
+	
+<section layout:fragment="content" class="contents">
+	<div class="sign-up-box container">
+		<h1 class="ml-4">회원가입</h1>
+			<form method="POST" class="d-flex">
+				<table>
+					<thead>
+						<tr>
+							<th>아이디 (4자이상)</th>
+							<th>비밀번호</th>
+							<th>비밀번호 확인</th>
+							<th>이름</th>
+							<th>이메일</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<input type="text">
+							</td>
+							<td>
+								<input type="text">
+							</td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+	</div>
+</section>
+	
+<th:block layout:fragment="script">
+
+</th:block>
+	
+</html>
