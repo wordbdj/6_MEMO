@@ -8,5 +8,15 @@ spring:
     url: jdbc:mysql://localhost:3306/memo_240319?characterEncoding=UTF-8
     username: root
     password: root
+  jpa:
+    show-sql: true
+    hibernate:
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
 mybatis:
   mapper-locations: mappers/*Mapper.xml
