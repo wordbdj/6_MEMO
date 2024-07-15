@@ -20,6 +20,14 @@ public class UserBO {
 		
 	}
 	
+	// input: loginId password
+	// output: UserEntity or null
+	public UserEntity getUserEntityByLoginIdPassword(String loginId, String password) {
+		
+		return userRepository.findByLoginIdAndPassword(loginId, password);
+	}
+	
+	
 	// input: 4개의 파라미터
 	// output: UserEntity
 	public UserEntity addUser(String loginId, String password, String name, String email) {
