@@ -29,7 +29,7 @@ public class PostRestController {
 			HttpSession session) {
 		
 		// 글쓴이 번호를 session에서 꺼낸다.
-		int userId = (int)session.getAttribute("userId");
+		int userId = (int) session.getAttribute("userId");
 		String userLoginId = (String)session.getAttribute("userLoginId");
 		
 		// DB insert
