@@ -63,4 +63,17 @@
 			`id` = #{postId}
  	</select>
  	
+ 	<update id="updatePostByPostId" parameterType="map">
+ 		UPDATE `post`
+ 		SET
+ 			`subject` = #{subject}
+			,`content` = #{content}
+			<if test="imagePath != null">
+			,`imagePath` = #{imagePath}
+			</if>
+			,`updatedAt` = NOW()
+		WHERE
+			`id` = #{postId}
+			
+ 	</update>
  </mapper>

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,14 @@ public class PostRestController {
 	@Autowired
 	private PostBO postBO;
 	
+	/**
+	 * 글쓰기 API
+	 * @param subject
+	 * @param content
+	 * @param file
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/create")
 	public Map<String, Object> create(
 			@RequestParam("subject") String subject,
@@ -42,4 +51,30 @@ public class PostRestController {
 		return result;
 	}
 	
+	
+	@PutMapping("/update")
+	public Map<String, Object> update(
+			@RequestParam("postId") int postId,
+			@RequestParam("subject") String subject,
+			@RequestParam("content") String content, 
+			@RequestParam(value = "file", required = false) MultipartFile file,
+			HttpSession session) {
+		
+		
+		// userLogin by session
+		int userId = (int) session.getAttribute("userId");
+		String userLoginId = (String)session.getAttribute("userLoginId");
+		
+		// db update 
+		postBO.updatePostByPostId(userId, userLoginId, postId, subject, content, file);
+		
+		
+		// 응답값
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", 200);
+		result.put("result", "성공");
+		return result;
+		
+		
+	}
 }
