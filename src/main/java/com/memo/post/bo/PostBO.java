@@ -85,4 +85,25 @@ public class PostBO {
 		postMapper.updatePostByPostId(postId, subject, content, imagePath);
 	}
 	
+	// input : 파라미터들
+	// output : X
+	public void deletePostByPostId(
+			int userId, String userLoginId,
+			int postId, MultipartFile file) {
+		
+		Post post = postMapper.selectPostByPostIdUserId(userId, postId);
+		if (post == null) {
+			log.warn("[글 삭제] post is null. userId:{}, postId: {}", userId, postId);
+			return;
+		}
+		
+		String imagePath = post.getImagePath();
+		
+		if (imagePath != null) {
+			fileManagerService.deleteFile(imagePath);
+		} 
+		
+		postMapper.deletePostByPostId(postId);
+	}
+	
 }

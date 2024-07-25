@@ -22,7 +22,7 @@
 		</div>
 		
 		<div class="d-flex justify-content-between">
-			<button type="button" id="deleteBtn" class="btn btn-secondary">삭제</button>
+			<button type="button" id="deleteBtn" th:data-post-id="${post.id}" class="btn btn-secondary">삭제</button>
 			
 			<div>
 				<a href="/post/post-list-view" type="button" id="postListBtn" class="btn btn-dark">목록</a>
@@ -105,6 +105,39 @@
 					}
 				});
 			});
+			
+			$("#deleteBtn").on('click', function() {
+				//alert("글쓰기");
+				let postId = $(this).data("post-id");
+				let fileName = $("#file").val();
+				
+				let formData = new FormData();
+				formData.append("postId", postId);
+				formData.append("file", $("#file")[0].files[0]);
+				
+				$.ajax({
+					// request
+					type:"delete"
+					, url:"/post/delete"
+					, data:formData
+					, enctype:"multipart/form-data" // 파일업로드 필수 설정
+					, processData:false // 파일업로드 필수 설정
+					, contentType:false // 파일업로드 필수 설정
+					
+					, success:function(data) {
+						if (data.code == 200) {
+							alert("메모가 삭제되었습니다.");
+							location.href="/post/post-list-view";
+						} else {
+							alert(data.error_message);
+						}
+					}
+					, error:function(e) {
+						alert("글을 삭제하는데 실패했습니다.");
+					}
+				});
+			});
+				
 		});
     </script>
 </th:block>
