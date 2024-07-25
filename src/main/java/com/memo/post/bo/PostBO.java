@@ -54,6 +54,15 @@ public class PostBO {
 	
 	// input : 파라미터들
 	// output : X
+	/**
+	 * 글 수정 API
+	 * @param userId
+	 * @param userLoginId
+	 * @param postId
+	 * @param subject
+	 * @param content
+	 * @param file
+	 */
 	public void updatePostByPostId(
 			int userId, String userLoginId,
 			int postId, String subject, String content,
@@ -87,23 +96,33 @@ public class PostBO {
 	
 	// input : 파라미터들
 	// output : X
-	public void deletePostByPostId(
-			int userId, String userLoginId,
-			int postId, MultipartFile file) {
+	/**
+	 * 글 삭제 API
+	 * @param userId
+	 * @param userLoginId
+	 * @param postId
+	 * @param file
+	 */
+	public void deletePostByPostIdUserId(
+			int userId, 
+			int postId) {
 		
 		Post post = postMapper.selectPostByPostIdUserId(userId, postId);
 		if (post == null) {
 			log.warn("[글 삭제] post is null. userId:{}, postId: {}", userId, postId);
 			return;
 		}
+
+		// post db delete
+		int rowCount = postMapper.deletePostByPostId(postId);
 		
+		// TODO: 이미지파일이 존재하면 삭제, 삭제된 행도 1일때 
 		String imagePath = post.getImagePath();
 		
-		if (imagePath != null) {
+		if (rowCount > 0 && imagePath != null) {
 			fileManagerService.deleteFile(imagePath);
 		} 
 		
-		postMapper.deletePostByPostId(postId);
 	}
 	
 }

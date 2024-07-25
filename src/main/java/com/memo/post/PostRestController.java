@@ -82,13 +82,11 @@ public class PostRestController {
 	@DeleteMapping("/delete")
 	public Map<String, Object> delete(
 			@RequestParam("postId") int postId,
-			@RequestParam(value = "file", required = false) MultipartFile file,
 			HttpSession session) {
 		
 		int userId = (int) session.getAttribute("userId");
-		String userLoginId = (String)session.getAttribute("userLoginId");
 		
-		postBO.deletePostByPostId(userId, userLoginId, postId, file);
+		postBO.deletePostByPostIdUserId(userId, postId);
 		
 		Map<String, Object> result = new HashMap<>();
 		result.put("code", 200);
